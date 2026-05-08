@@ -242,6 +242,13 @@ export default function ResultPage() {
               )}
             </ul>
           </div>
+
+          <a
+            href="/audit"
+            className="block text-center w-full bg-white text-black py-4 rounded-2xl font-semibold hover:scale-[1.02] transition"
+          >
+            Run Another Audit
+          </a>
         </div>
       </div>
     </main>
