@@ -8,7 +8,8 @@ export default function ResultPage() {
   const runAudit = (data: any) => {
     let savings = 0;
 
-    let recommendation = "Your AI spending looks optimized.";
+    let recommendation =
+      "Your AI spending looks optimized.";
 
     let riskLevel = "Low";
 
@@ -20,7 +21,8 @@ export default function ResultPage() {
     ) {
       savings += 30;
 
-      recommendation = "Switch from ChatGPT Team to Plus for a smaller team.";
+      recommendation =
+        "Switch from ChatGPT Team to Plus for a smaller team.";
 
       riskLevel = "Medium";
     }
@@ -33,34 +35,47 @@ export default function ResultPage() {
     ) {
       savings += 100;
 
-      recommendation = "Claude Enterprise may be unnecessary for a small team.";
+      recommendation =
+        "Claude Enterprise may be unnecessary for a small team.";
 
       riskLevel = "High";
     }
 
     // GitHub Copilot expensive
-    if (data.tool === "GitHub Copilot" && Number(data.monthlySpend) > 40) {
+    if (
+      data.tool === "GitHub Copilot" &&
+      Number(data.monthlySpend) > 40
+    ) {
       savings += 15;
 
-      recommendation = "Consider Cursor or reducing Copilot seats.";
+      recommendation =
+        "Consider Cursor or reducing Copilot seats.";
 
       riskLevel = "Medium";
     }
 
     // Cursor optimization
-    if (data.tool === "Cursor" && data.plan === "Business") {
+    if (
+      data.tool === "Cursor" &&
+      data.plan === "Business"
+    ) {
       savings += 25;
 
-      recommendation = "Cursor Pro may be enough depending on usage.";
+      recommendation =
+        "Cursor Pro may be enough depending on usage.";
 
       riskLevel = "Low";
     }
 
     // OpenAI API overspending
-    if (data.tool === "OpenAI API" && Number(data.monthlySpend) > 200) {
+    if (
+      data.tool === "OpenAI API" &&
+      Number(data.monthlySpend) > 200
+    ) {
       savings += 50;
 
-      recommendation = "Consider prompt optimization and caching strategies.";
+      recommendation =
+        "Consider prompt optimization and caching strategies.";
 
       riskLevel = "High";
     }
@@ -94,21 +109,57 @@ export default function ResultPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white p-10">
-      <h1 className="text-5xl font-bold">Audit Result</h1>
+    <main className="min-h-screen bg-black text-white flex items-center justify-center p-10">
+      <div className="w-full max-w-2xl border border-white/20 rounded-3xl p-8 bg-white/5 backdrop-blur">
+        <h1 className="text-5xl font-bold">
+          Audit Result
+        </h1>
 
-      <div className="mt-10 border border-white rounded-2xl p-6">
-        <h2 className="text-3xl font-bold">
-          ${auditResult.savings}/month savings
-        </h2>
-
-        <p className="mt-4 text-lg">{auditResult.recommendation}</p>
-
-        <p className="mt-4 text-xl">
-          Annual Savings: ${auditResult.yearlySavings}
+        <p className="mt-3 text-gray-300">
+          Here’s your AI spend optimization summary.
         </p>
 
-        <p className="mt-2 text-lg">Risk Level: {auditResult.riskLevel}</p>
+        <div className="mt-10 space-y-6">
+          <div className="border border-white/10 rounded-2xl p-6">
+            <h2 className="text-4xl font-bold">
+              ${auditResult.savings}/month
+            </h2>
+
+            <p className="mt-2 text-gray-300">
+              Potential Monthly Savings
+            </p>
+          </div>
+
+          <div className="border border-white/10 rounded-2xl p-6">
+            <h3 className="text-2xl font-semibold">
+              Annual Savings
+            </h3>
+
+            <p className="mt-2 text-3xl font-bold">
+              ${auditResult.yearlySavings}
+            </p>
+          </div>
+
+          <div className="border border-white/10 rounded-2xl p-6">
+            <h3 className="text-2xl font-semibold">
+              Risk Level
+            </h3>
+
+            <p className="mt-2 text-xl">
+              {auditResult.riskLevel}
+            </p>
+          </div>
+
+          <div className="border border-white/10 rounded-2xl p-6">
+            <h3 className="text-2xl font-semibold">
+              Recommendation
+            </h3>
+
+            <p className="mt-3 text-gray-300">
+              {auditResult.recommendation}
+            </p>
+          </div>
+        </div>
       </div>
     </main>
   );
