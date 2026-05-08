@@ -178,6 +178,25 @@ export default function ResultPage() {
               {auditResult.aiSummary}
             </p>
           </div>
+          <div className = "border border-white/10 rounded-2xl p-6">
+            <h3 className = "text-2xl font-semibold">
+              Confidence Score
+            </h3>
+
+            <p className = "mt-3 text-3xl font-bold">
+              {auditResult.confidenceScore}
+            </p>
+          </div>
+
+          <div className = "border border-white/10 rounded-2xl p-6">
+            <h3 className = "text-2xl font-semibold">
+              Optimization Status
+            </h3>
+
+            <p className = "mt-3 text-gray-300">
+              {auditResult.optimizationStatus}
+            </p>
+          </div>
         </div>
       </div>
     </main>
