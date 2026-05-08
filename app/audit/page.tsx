@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AuditPage() {
   const [formData, setFormData] = useState({
@@ -32,6 +32,20 @@ export default function AuditPage() {
     window.location.href = "/result";
   };
 
+  useEffect(() => {
+    const navEntries =
+      performance.getEntriesByType("navigation");
+
+    const isReload =
+      navEntries.length > 0 &&
+      (navEntries[0] as PerformanceNavigationTiming)
+        .type === "reload";
+
+    if (isReload) {
+      window.location.href = "/";
+    }
+  }, []);
+
   return (
     <main className="min-h-screen bg-black text-white p-10 flex items-center justify-center">
       <div className="w-full max-w-2xl border border-white/20 rounded-3xl p-8 bg-white/5 backdrop-blur">
@@ -44,7 +58,13 @@ export default function AuditPage() {
           optimization opportunities.
         </p>
 
-        <div className="mt-8 space-y-6">
+        <form
+          className="mt-8 space-y-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
           <div>
             <label className="block mb-2 text-sm font-medium">
               AI Tool
@@ -139,12 +159,12 @@ export default function AuditPage() {
           </div>
 
           <button
-            onClick={handleSubmit}
+            type="submit"
             className="w-full bg-white text-black py-4 rounded-2xl font-semibold hover:scale-[1.02] transition"
           >
             Generate Audit
           </button>
-        </div>
+        </form>
       </div>
     </main>
   );
