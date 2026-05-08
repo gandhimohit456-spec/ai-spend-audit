@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function AuditPage() {
   const [formData, setFormData] = useState({
@@ -31,20 +31,6 @@ export default function AuditPage() {
 
     window.location.href = "/result";
   };
-
-  useEffect(() => {
-    const navEntries =
-      performance.getEntriesByType("navigation");
-
-    const isReload =
-      navEntries.length > 0 &&
-      (navEntries[0] as PerformanceNavigationTiming)
-        .type === "reload";
-
-    if (isReload) {
-      window.location.href = "/";
-    }
-  }, []);
 
   return (
     <main className="min-h-screen bg-black text-white p-10 flex items-center justify-center">
