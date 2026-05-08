@@ -161,6 +161,15 @@ export default function ResultPage() {
               {auditResult.recommendation}
             </p>
           </div>
+          <div className="border border-white/10 rounded-2xl p-6">
+            <h3 className="text-2xl font-semibold">
+              AI Summary
+            </h3>
+
+            <p className = "mt-3 text-gray-300 leading-7">
+              {auditResult.aiSummary}
+            </p>
+          </div>
         </div>
       </div>
     </main>
