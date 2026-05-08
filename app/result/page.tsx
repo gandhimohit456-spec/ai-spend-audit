@@ -105,12 +105,12 @@ export default function ResultPage() {
   };
 
   useEffect(() => {
-    const navigationEntries =
+    const navEntries =
       performance.getEntriesByType("navigation");
 
     const isReload =
-      navigationEntries.length > 0 &&
-      (navigationEntries[0] as PerformanceNavigationTiming)
+      navEntries.length > 0 &&
+      (navEntries[0] as PerformanceNavigationTiming)
         .type === "reload";
 
     if (isReload) {
