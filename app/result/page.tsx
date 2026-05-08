@@ -105,21 +105,6 @@ export default function ResultPage() {
   };
 
   useEffect(() => {
-    const navEntries =
-      performance.getEntriesByType("navigation");
-
-    const isReload =
-      navEntries.length > 0 &&
-      (navEntries[0] as PerformanceNavigationTiming)
-        .type === "reload";
-
-    if (isReload) {
-      localStorage.removeItem("auditData");
-
-      window.location.href = "/";
-      return;
-    }
-
     const savedData =
       localStorage.getItem("auditData");
 
