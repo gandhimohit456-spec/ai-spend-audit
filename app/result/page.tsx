@@ -80,26 +80,48 @@ export default function ResultPage() {
       riskLevel = "High";
     }
 
-    return{
+    return {
       savings,
       recommendation,
       riskLevel,
-      yearlySavings: savings *12,
-      
-      aiSummary: 'Your organization may be overspending on ${data.tool}.Based on your current configuration,you could potentially save $${savings} per month by optimizing your AI stack and reducing unneccesary costs.',
-      
+      yearlySavings: savings * 12,
+
+      aiSummary: `Your organization may be overspending on ${data.tool}. Based on your current configuration, you could potentially save $${savings} per month by optimizing your AI stack and reducing unnecessary costs.`,
+
       confidenceScore:
-        savings > 50 ? "92%" : "78",
+        savings > 50 ? "92%" : "78%",
 
       optimizationStatus:
         savings > 0
-        ? "Optimization Opportunity Found"
-        : "Already Optimized"
+          ? "Optimization Opportunity Found"
+          : "Already Optimized",
+
+      topRecommendations: [
+        "Reduce inactive AI seats",
+        "Switch to lower pricing tiers",
+        "Optimize prompt usage",
+      ],
     };
   };
 
   useEffect(() => {
-    const savedData = localStorage.getItem("auditData");
+    const navigationEntries =
+      performance.getEntriesByType("navigation");
+
+    const isReload =
+      navigationEntries.length > 0 &&
+      (navigationEntries[0] as PerformanceNavigationTiming)
+        .type === "reload";
+
+    if (isReload) {
+      localStorage.removeItem("auditData");
+
+      window.location.href = "/";
+      return;
+    }
+
+    const savedData =
+      localStorage.getItem("auditData");
 
     if (savedData) {
       const data = JSON.parse(savedData);
@@ -107,6 +129,8 @@ export default function ResultPage() {
       const result = runAudit(data);
 
       setAuditResult(result);
+    } else {
+      window.location.href = "/";
     }
   }, []);
 
@@ -130,7 +154,7 @@ export default function ResultPage() {
         </p>
 
         <div className="mt-10 space-y-6">
-          <div className="border border-white/10 rounded-2xl p-6">
+          <div className="border border-white/10 rounded-2xl p-6 hover:border-white/30 transition">
             <h2 className="text-4xl font-bold">
               ${auditResult.savings}/month
             </h2>
@@ -140,7 +164,7 @@ export default function ResultPage() {
             </p>
           </div>
 
-          <div className="border border-white/10 rounded-2xl p-6">
+          <div className="border border-white/10 rounded-2xl p-6 hover:border-white/30 transition">
             <h3 className="text-2xl font-semibold">
               Annual Savings
             </h3>
@@ -150,7 +174,7 @@ export default function ResultPage() {
             </p>
           </div>
 
-          <div className="border border-white/10 rounded-2xl p-6">
+          <div className="border border-white/10 rounded-2xl p-6 hover:border-white/30 transition">
             <h3 className="text-2xl font-semibold">
               Risk Level
             </h3>
@@ -160,7 +184,7 @@ export default function ResultPage() {
             </p>
           </div>
 
-          <div className="border border-white/10 rounded-2xl p-6">
+          <div className="border border-white/10 rounded-2xl p-6 hover:border-white/30 transition">
             <h3 className="text-2xl font-semibold">
               Recommendation
             </h3>
@@ -169,33 +193,54 @@ export default function ResultPage() {
               {auditResult.recommendation}
             </p>
           </div>
-          <div className="border border-white/10 rounded-2xl p-6">
+
+          <div className="border border-white/10 rounded-2xl p-6 hover:border-white/30 transition">
             <h3 className="text-2xl font-semibold">
               AI Summary
             </h3>
 
-            <p className = "mt-3 text-gray-300 leading-7">
+            <p className="mt-3 text-gray-300 leading-7">
               {auditResult.aiSummary}
             </p>
           </div>
-          <div className = "border border-white/10 rounded-2xl p-6">
-            <h3 className = "text-2xl font-semibold">
+
+          <div className="border border-white/10 rounded-2xl p-6 hover:border-white/30 transition">
+            <h3 className="text-2xl font-semibold">
               Confidence Score
             </h3>
 
-            <p className = "mt-3 text-3xl font-bold">
+            <p className="mt-3 text-3xl font-bold">
               {auditResult.confidenceScore}
             </p>
           </div>
 
-          <div className = "border border-white/10 rounded-2xl p-6">
-            <h3 className = "text-2xl font-semibold">
+          <div className="border border-white/10 rounded-2xl p-6 hover:border-white/30 transition">
+            <h3 className="text-2xl font-semibold">
               Optimization Status
             </h3>
 
-            <p className = "mt-3 text-gray-300">
+            <p className="mt-3 text-gray-300">
               {auditResult.optimizationStatus}
             </p>
+          </div>
+
+          <div className="border border-white/10 rounded-2xl p-6 hover:border-white/30 transition">
+            <h3 className="text-2xl font-semibold">
+              Top Recommendations
+            </h3>
+
+            <ul className="mt-4 space-y-3 text-gray-300">
+              {auditResult.topRecommendations.map(
+                (
+                  item: string,
+                  index: number
+                ) => (
+                  <li key={index}>
+                    • {item}
+                  </li>
+                )
+              )}
+            </ul>
           </div>
         </div>
       </div>
