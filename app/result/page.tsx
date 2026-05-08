@@ -86,7 +86,15 @@ export default function ResultPage() {
       riskLevel,
       yearlySavings: savings *12,
       
-      aiSummary: 'Your organization may be overspending on ${data.tool}.Based on your current configuration,you could potentially save $${savings} per month by optimizing your AI stack and reducing unneccesary costs.'
+      aiSummary: 'Your organization may be overspending on ${data.tool}.Based on your current configuration,you could potentially save $${savings} per month by optimizing your AI stack and reducing unneccesary costs.',
+      
+      confidenceScore:
+        savings > 50 ? "92%" : "78",
+
+      optimizationStatus:
+        savings > 0
+        ? "Optimization Opportunity Found"
+        : "Already Optimized"
     };
   };
 
