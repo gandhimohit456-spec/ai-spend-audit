@@ -80,11 +80,13 @@ export default function ResultPage() {
       riskLevel = "High";
     }
 
-    return {
+    return{
       savings,
       recommendation,
       riskLevel,
-      yearlySavings: savings * 12,
+      yearlySavings: savings *12,
+      
+      aiSummary: 'Your organization may be overspending on ${data.tool}.Based on your current configuration,you could potentially save $${savings} per month by optimizing your AI stack and reducing unneccesary costs.'
     };
   };
 
